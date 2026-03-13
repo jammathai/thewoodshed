@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "./database.types";
 import { allNotes } from "./Note";
-import type { Pattern } from "./Pattern";
+import { type Pattern } from "./Pattern";
+import PatternGroup, { type PatternGroupRow } from "./PatternGroup";
 import Prompt, { type PromptProps } from "./Prompt";
 
 const supabase = createClient<Database>(
@@ -15,29 +16,42 @@ function pickRandom<T>(array: T[]) {
 }
 
 function App() {
+  const [patternGroups, setPatternGroups] = useState<PatternGroupRow[]>([]);
   const [allPatterns, setAllPatterns] = useState<Pattern[]>([]);
+  const [selectedPatterns, setSelectedPatterns] = useState<Pattern[]>([]);
   const [promptProps, setPromptProps] = useState<PromptProps>({
     root: "C",
-    pattern: { name: "", intervals: [] },
+    pattern: { name: "", group_id: "", intervals: [] },
   });
 
-  const allPatternsRef = useRef(allPatterns);
+  const selectedPatternsRef = useRef(selectedPatterns);
   useEffect(() => {
-    allPatternsRef.current = allPatterns;
-  }, [allPatterns]);
+    selectedPatternsRef.current = selectedPatterns;
+  }, [selectedPatterns]);
 
   useEffect(() => {
+    async function getPatternGroups() {
+      const { data } = await supabase.from("pattern_groups").select();
+      if (data !== null) data.sort((a, b) => a.name.localeCompare(b.name));
+      setPatternGroups(data ?? []);
+    }
+
     async function getPatterns() {
       const { data } = await supabase.from("patterns").select();
+      if (data !== null) data.sort((a, b) => a.name.localeCompare(b.name));
       setAllPatterns((data as Pattern[]) ?? []);
     }
 
+    void getPatternGroups();
     void getPatterns();
 
     function pickPrompt() {
+      if (allNotes.length === 0 || selectedPatternsRef.current.length === 0)
+        return;
+
       setPromptProps({
         root: pickRandom(allNotes),
-        pattern: pickRandom(allPatternsRef.current),
+        pattern: pickRandom(selectedPatternsRef.current),
       });
     }
 
@@ -51,6 +65,17 @@ function App() {
   return (
     <>
       <Prompt {...promptProps} />
+      <ul>
+        {patternGroups.map((group, index) => (
+          <PatternGroup
+            allPatterns={allPatterns}
+            selectedPatterns={selectedPatterns}
+            setSelectedPatterns={setSelectedPatterns}
+            key={index}
+            {...group}
+          />
+        ))}
+      </ul>
     </>
   );
 }

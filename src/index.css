@@ -3,17 +3,100 @@
   src: url("./assets/MuseJazzText.otf") format("opentype");
 }
 
+@font-face {
+  font-family: "Funnel Display";
+  src: url("./assets/FunnelDisplay-Regular.ttf") format("truetype");
+}
+
 body {
   margin: 0;
   background-color: #203020;
-  font-family: "MuseJazz Text", sans-serif;
+  font-family: "Funnel Display", sans-serif;
+  line-height: 1;
   color: white;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
 #root {
+  box-sizing: border-box;
   min-height: 100vh;
+  max-width: 480px;
+  margin: auto;
+  padding: 33% 10px 10px 10px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+}
+
+ul {
+  list-style: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.float-right {
+  float: right;
+}
+
+.placeholder {
+  opacity: 25%;
+}
+
+.prompt {
+  font-family: "MuseJazz Text", sans-serif;
+  font-size: 2rem;
+  text-align: center;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.pattern-group {
+  margin-top: 10px;
+}
+
+.pattern-group-name {
+  opacity: 25%;
+  border-bottom: 1px solid white;
+  padding: 5px;
+  border-radius: 5px 5px 0 0;
+  transition: box-shadow 0.2s ease;
+  cursor: pointer;
+}
+.pattern-group-name:hover {
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.25);
+}
+
+.pattern-group-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  margin-top: 2px;
+  transition: grid-template-rows 0.3s ease;
+  overflow: hidden;
+}
+.pattern-group-content.expanded {
+  grid-template-rows: 1fr;
+}
+
+.pattern-group-content > ul {
+  min-height: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.pattern-toggle {
+  display: inline-block;
+  padding: 5px;
+  border-radius: 5px;
+  font-family: "MuseJazz Text", sans-serif;
+  transition: box-shadow 0.2s ease;
+  cursor: pointer;
+}
+.pattern-toggle:hover {
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.0625);
+}
+.pattern-toggle.selected {
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.125);
+}
+.pattern-toggle.selected:hover {
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1875);
 }

@@ -1,13 +1,11 @@
 import type { Note } from "./Note";
 import type { Pattern } from "./Pattern";
-import "./Prompt.css";
 
 export type PromptProps = { root: Note; pattern: Pattern };
 
-export default function Prompt(props: PromptProps) {
-  const { root, pattern } = props;
+export default function Prompt({ root, pattern }: PromptProps) {
   return (
-    <div className="prompt">
+    <div className="prompt music glow">
       {root}
       {pattern.name}
     </div>
