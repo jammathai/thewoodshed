@@ -10,10 +10,11 @@
 
 body {
   margin: 0;
-  background-color: #203020;
+  background-color: white;
   font-family: "Funnel Display", sans-serif;
+  font-size: 1.2rem;
   line-height: 1;
-  color: white;
+  color: black;
 }
 
 #root {
@@ -25,6 +26,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
 }
 
 ul {
@@ -34,45 +36,38 @@ ul {
   padding: 0;
 }
 
-.float-right {
-  float: right;
-}
-
-.placeholder {
-  opacity: 25%;
-}
-
 .prompt {
   font-family: "MuseJazz Text", sans-serif;
-  font-size: 2rem;
+  font-size: 2em;
   text-align: center;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
 .pattern-group {
   margin-top: 10px;
+  padding: 5px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    -5px 0 10px #e0e0ff,
+    5px 0 10px #e0ffe0;
 }
 
-.pattern-group-name {
-  opacity: 25%;
-  border-bottom: 1px solid white;
+.pattern-group-heading {
+  color: #a0a0ff;
   padding: 5px;
-  border-radius: 5px 5px 0 0;
-  transition: box-shadow 0.2s ease;
   cursor: pointer;
 }
-.pattern-group-name:hover {
-  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.25);
+
+.float-right {
+  float: right;
 }
 
 .pattern-group-content {
   display: grid;
   grid-template-rows: 0fr;
-  margin-top: 2px;
   transition: grid-template-rows 0.3s ease;
-  overflow: hidden;
 }
-.pattern-group-content.expanded {
+.pattern-group.expanded > .pattern-group-content {
   grid-template-rows: 1fr;
 }
 
@@ -92,11 +87,26 @@ ul {
   cursor: pointer;
 }
 .pattern-toggle:hover {
-  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.0625);
+  box-shadow:
+    inset -5px 0 10px transparent,
+    inset 5px 0 10px transparent,
+    -5px 0 10px #e0e0ff,
+    5px 0 10px #e0ffe0;
 }
 .pattern-toggle.selected {
-  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.125);
+  transition: box-shadow 0.2s ease;
+  box-shadow:
+    inset -5px 0 10px #c0c0ff,
+    inset 5px 0 10px #c0ffc0;
 }
 .pattern-toggle.selected:hover {
-  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1875);
+  box-shadow:
+    inset -5px 0 10px #c0c0ff,
+    inset 5px 0 10px #c0ffc0,
+    -5px 0 10px #e0e0ff,
+    5px 0 10px #e0ffe0;
+}
+
+.placeholder {
+  color: #a0ffa0;
 }

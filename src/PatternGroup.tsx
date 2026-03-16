@@ -21,9 +21,9 @@ export default function PatternGroup({
   const patterns = allPatterns.filter((pattern) => pattern.group_id === id);
 
   return (
-    <li className="pattern-group">
+    <li className={"pattern-group" + (expanded ? " expanded" : "")}>
       <div
-        className="pattern-group-name"
+        className="pattern-group-heading"
         onClick={() => {
           setExpanded(!expanded);
         }}
@@ -31,7 +31,7 @@ export default function PatternGroup({
         {name}
         <span className="float-right">{expanded ? "−" : "+"}</span>
       </div>
-      <div className={"pattern-group-content" + (expanded ? " expanded" : "")}>
+      <div className="pattern-group-content">
         <ul>
           {patterns.map((pattern, index) => {
             const selected = selectedPatterns.includes(pattern);
