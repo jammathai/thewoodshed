@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "./database.types";
-import { allNotes } from "./Note";
+import { allNotes, type Note } from "./Note";
 import { type Pattern } from "./Pattern";
 import PatternGroup, { type PatternGroupRow } from "./PatternGroup";
 import Prompt, { type PromptProps } from "./Prompt";
+import RootSelector from "./RootSelector";
 
 const supabase = createClient<Database>(
   import.meta.env.VITE_SUPABASE_URL,
@@ -16,6 +17,7 @@ function pickRandom<T>(array: T[]) {
 }
 
 function App() {
+  const [selectedRoots, setSelectedRoots] = useState<Note[]>([]);
   const [patternGroups, setPatternGroups] = useState<PatternGroupRow[]>([]);
   const [allPatterns, setAllPatterns] = useState<Pattern[]>([]);
   const [selectedPatterns, setSelectedPatterns] = useState<Pattern[]>([]);
@@ -25,9 +27,13 @@ function App() {
   });
 
   const selectedPatternsRef = useRef(selectedPatterns);
+  const selectedRootsRef = useRef(selectedRoots);
   useEffect(() => {
     selectedPatternsRef.current = selectedPatterns;
   }, [selectedPatterns]);
+  useEffect(() => {
+    selectedRootsRef.current = selectedRoots;
+  }, [selectedRoots]);
 
   useEffect(() => {
     async function getPatternGroups() {
@@ -46,11 +52,14 @@ function App() {
     void getPatterns();
 
     function pickPrompt() {
-      if (allNotes.length === 0 || selectedPatternsRef.current.length === 0)
+      if (
+        selectedRootsRef.current.length === 0 ||
+        selectedPatternsRef.current.length === 0
+      )
         return;
 
       setPromptProps({
-        root: pickRandom(allNotes),
+        root: pickRandom(selectedRootsRef.current),
         pattern: pickRandom(selectedPatternsRef.current),
       });
     }
@@ -65,7 +74,11 @@ function App() {
   return (
     <>
       <Prompt {...promptProps} />
-      <ul>
+      <RootSelector
+        selectedRoots={selectedRoots}
+        setSelectedRoots={setSelectedRoots}
+      />
+      <ul className="pattern-groups">
         {patternGroups.map((group, index) => (
           <PatternGroup
             allPatterns={allPatterns}

@@ -5,7 +5,7 @@ export type PromptProps = { root: Note; pattern: Pattern };
 
 export default function Prompt({ root, pattern }: PromptProps) {
   return (
-    <div className="prompt music glow">
+    <div className="prompt">
       {root}
       {pattern.name}
     </div>

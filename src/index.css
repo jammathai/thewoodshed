@@ -4,14 +4,15 @@
 }
 
 @font-face {
-  font-family: "Funnel Display";
-  src: url("./assets/FunnelDisplay-Regular.ttf") format("truetype");
+  font-family: "Bircolage Grotesque";
+  src: url("./assets/BricolageGrotesque12ptCondensed-SemiBold.otf")
+    format("opentype");
 }
 
 body {
   margin: 0;
   background-color: white;
-  font-family: "Funnel Display", sans-serif;
+  font-family: "Bircolage Grotesque", sans-serif;
   font-size: 1.2rem;
   line-height: 1;
   color: black;
@@ -26,7 +27,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 25px;
 }
 
 ul {
@@ -42,32 +43,87 @@ ul {
   text-align: center;
 }
 
+.root-selector {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto auto;
+  gap: 2px;
+}
+
+.root-selector::before {
+  content: "";
+  position: absolute;
+  inset: 0 -5px;
+  border-radius: 10px;
+  z-index: 0;
+  background-image: linear-gradient(to right, #e0e0ff, #c0ffc0);
+  filter: blur(5px);
+}
+
+.root-selector > li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  border-radius: 10px;
+  font-family: "MuseJazz Text", sans-serif;
+  text-align: center;
+  transition: box-shadow 0.1s ease;
+  cursor: pointer;
+}
+
+.root-selector > li.selected {
+  box-shadow:
+    inset -3px -3px 10px #8080ff,
+    inset 5px -5px 10px #80ff80;
+}
+
+.white-key {
+  background-color: white;
+}
+
+.black-key {
+  background-color: black;
+  color: white;
+}
+
+.pattern-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .pattern-group {
-  margin-top: 10px;
   padding: 5px;
   border-radius: 10px;
   overflow: hidden;
   box-shadow:
     -5px 0 10px #e0e0ff,
-    5px 0 10px #e0ffe0;
+    5px 0 10px #c0ffc0;
 }
 
 .pattern-group-heading {
-  color: #a0a0ff;
-  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  padding: 2px;
+  background: linear-gradient(to right, #8080ff, #80ff80);
+  background-clip: text;
+  color: transparent;
   cursor: pointer;
-}
-
-.float-right {
-  float: right;
 }
 
 .pattern-group-content {
   display: grid;
+  opacity: 0;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    grid-template-rows 0.3s ease;
 }
 .pattern-group.expanded > .pattern-group-content {
+  opacity: 1;
   grid-template-rows: 1fr;
 }
 
@@ -81,32 +137,17 @@ ul {
 .pattern-toggle {
   display: inline-block;
   padding: 5px;
-  border-radius: 5px;
+  border-radius: 10px;
   font-family: "MuseJazz Text", sans-serif;
-  transition: box-shadow 0.2s ease;
+  transition: box-shadow 0.1s ease;
   cursor: pointer;
 }
-.pattern-toggle:hover {
-  box-shadow:
-    inset -5px 0 10px transparent,
-    inset 5px 0 10px transparent,
-    -5px 0 10px #e0e0ff,
-    5px 0 10px #e0ffe0;
-}
 .pattern-toggle.selected {
-  transition: box-shadow 0.2s ease;
   box-shadow:
-    inset -5px 0 10px #c0c0ff,
-    inset 5px 0 10px #c0ffc0;
-}
-.pattern-toggle.selected:hover {
-  box-shadow:
-    inset -5px 0 10px #c0c0ff,
-    inset 5px 0 10px #c0ffc0,
-    -5px 0 10px #e0e0ff,
-    5px 0 10px #e0ffe0;
+    inset -3px 0 10px #8080ff,
+    inset 5px 0 10px #80ff80;
 }
 
 .placeholder {
-  color: #a0ffa0;
+  color: #8080ff;
 }

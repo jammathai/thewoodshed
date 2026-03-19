@@ -28,8 +28,8 @@ export default function PatternGroup({
           setExpanded(!expanded);
         }}
       >
-        {name}
-        <span className="float-right">{expanded ? "−" : "+"}</span>
+        <span>{name}</span>
+        <span className="float-right">{expanded ? "⏶" : "⏷"}</span>
       </div>
       <div className="pattern-group-content">
         <ul>

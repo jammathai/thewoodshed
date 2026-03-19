@@ -16,7 +16,7 @@ export default function PatternToggle({
       className={"pattern-toggle" + (selected ? " selected" : "")}
       onClick={toggleCallback}
     >
-      <span className="placeholder">X</span>
+      <span className="placeholder">•</span>
       {pattern.name}
     </li>
   );
