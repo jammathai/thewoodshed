@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "./database.types";
-import { allNotes, type Note } from "./Note";
+import type { Note } from "./Note";
 import { type Pattern } from "./Pattern";
 import PatternGroup, { type PatternGroupRow } from "./PatternGroup";
 import Prompt, { type PromptProps } from "./Prompt";
